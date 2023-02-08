@@ -1,4 +1,4 @@
-import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
@@ -25,8 +25,9 @@ describe('07 - Reset Report Data', () => {
       // Try deleting the fourth record
       const deleteRecordBtn = screen.getAllByRole('button', { name: "Delete" })[3];
       userEvent.click(deleteRecordBtn);
-      await waitForElementToBeRemoved(deleteRecordBtn);
-      expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><section><ul><li><a href=\"/reports/1\">Report #1</a><a href=\"/reports/1/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/2\">Report #2</a><a href=\"/reports/2/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/3\">Report #3</a><a href=\"/reports/3/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/5\">Report #5</a><a href=\"/reports/5/edit\">Edit</a><button>Delete</button></li></ul><a href=\"/reports/new\">New Report</a><button>Reset Data</button></section>");
+      await waitFor(() => {
+        expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><section><ul><li><a href=\"/reports/1\">Report #1</a><a href=\"/reports/1/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/2\">Report #2</a><a href=\"/reports/2/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/3\">Report #3</a><a href=\"/reports/3/edit\">Edit</a><button>Delete</button></li><li><a href=\"/reports/5\">Report #5</a><a href=\"/reports/5/edit\">Edit</a><button>Delete</button></li></ul><a href=\"/reports/new\">New Report</a><button>Reset Data</button></section>");
+      });
 
       // Reset all records to initial record data
       const resetRecordsBtn = screen.getByRole('button', { name: "Reset Data" });
@@ -58,8 +59,9 @@ describe('07 - Reset Report Data', () => {
       // Try deleting the second record
       const deleteRecordBtn = screen.getAllByRole('button', { name: "Delete" })[1];
       userEvent.click(deleteRecordBtn);
-      await waitForElementToBeRemoved(deleteRecordBtn);
-      expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><section><ul><li><a href=\"/reports/43210\">Report #43210</a><a href=\"/reports/43210/edit\">Edit</a><button>Delete</button></li></ul><a href=\"/reports/new\">New Report</a><button>Reset Data</button></section>");
+      await waitFor(() => {
+        expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><section><ul><li><a href=\"/reports/43210\">Report #43210</a><a href=\"/reports/43210/edit\">Edit</a><button>Delete</button></li></ul><a href=\"/reports/new\">New Report</a><button>Reset Data</button></section>");
+      });
 
       // Reset all records to initial record data
       const resetRecordsBtn = screen.getByRole('button', { name: "Reset Data" });

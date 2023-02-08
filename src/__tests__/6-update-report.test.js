@@ -1,4 +1,4 @@
-import { screen, waitForElementToBeRemoved, fireEvent } from '@testing-library/react';
+import { screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
@@ -33,13 +33,14 @@ describe('06 - Update a Report', () => {
       });
       const link = screen.getAllByRole('link', { name: "Edit"})[0];
       userEvent.click(link);
-      await waitForElementToBeRemoved(link);
-      expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><form><h2>Update Report</h2><label>Understanding<input type=\"text\" value=\"Confident I understand everything.\"></label><label>Improvement<textarea>Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.</textarea></label><input type=\"submit\" value=\"Update Report\"></form>");
+      await waitFor(() => {
+        expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><form><h2>Update Report</h2><label>Understanding<input type=\"text\" value=\"Confident I understand everything.\"></label><label>Improvement<textarea>Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.</textarea></label><input type=\"submit\" value=\"Update Report\"></form>");
 
-      const understandingInput = screen.getByLabelText('Understanding');
-      const improvementInput = screen.getByLabelText('Improvement');
-      expect(understandingInput.value).toBe("Confident I understand everything.");
-      expect(improvementInput.value).toBe("Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.");
+        const understandingInput = screen.getByLabelText('Understanding');
+        const improvementInput = screen.getByLabelText('Improvement');
+        expect(understandingInput.value).toBe("Confident I understand everything.");
+        expect(improvementInput.value).toBe("Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.");
+      });
     });
 
     it('should update "Report #1" in the Redux store when UpdateReportForm is submitted on "/reports/1/edit"', async () => {
@@ -48,8 +49,9 @@ describe('06 - Update a Report', () => {
       });
       const link = screen.getAllByRole('link', { name: "Edit"})[0];
       userEvent.click(link);
-      await waitForElementToBeRemoved(link);
-      expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><form><h2>Update Report</h2><label>Understanding<input type=\"text\" value=\"Confident I understand everything.\"></label><label>Improvement<textarea>Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.</textarea></label><input type=\"submit\" value=\"Update Report\"></form>");
+      await waitFor(() => {
+        expect(container.innerHTML).toBe("<h1>Progress Tracker Lite</h1><form><h2>Update Report</h2><label>Understanding<input type=\"text\" value=\"Confident I understand everything.\"></label><label>Improvement<textarea>Dang, I wish I knew Redux as well as Brad. Also, I need to get better at JavaScript.</textarea></label><input type=\"submit\" value=\"Update Report\"></form>");
+      });
 
       const understandingInput = screen.getByLabelText('Understanding');
       const improvementInput = screen.getByLabelText('Improvement');
@@ -65,9 +67,9 @@ describe('06 - Update a Report', () => {
 
       const submitBtn = screen.getByRole('button', { name: "Update Report"});
       userEvent.click(submitBtn);
-      await waitForElementToBeRemoved(submitBtn);
-
-      expect(container.innerHTML).toMatch(new RegExp(`<h1>Progress Tracker Lite</h1><section>ID: 1<br>Understanding: ${understandingValue}<br>Improvement: ${improvementValue}<br><a href=\"/\">Back to Report Index</a></section>`));
+      await waitFor(() => {
+        expect(container.innerHTML).toMatch(new RegExp(`<h1>Progress Tracker Lite</h1><section>ID: 1<br>Understanding: ${understandingValue}<br>Improvement: ${improvementValue}<br><a href=\"/\">Back to Report Index</a></section>`));
+      });
     });
   });
 });
