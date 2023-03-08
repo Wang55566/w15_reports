@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom';
 import ReportIndexItem from './ReportIndexItem';
 
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+
+import { resetReports } from '../store/reportReducer';
 
 const ReportIndex = () => {
   const objectOfReports = useSelector(state => state.reports)
   const reports = Object.values(objectOfReports);
+  const dispatch = useDispatch();
   const resetData = (e) => {
     e.preventDefault();
+    dispatch(resetReports());
   };
 
   return (
