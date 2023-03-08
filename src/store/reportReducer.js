@@ -15,8 +15,6 @@ export const loadReports = () => {
   }
 }
 
-
-
 const initialState = {...normalized_report};
 
 const reportReducer = (state = initialState, action) => {
