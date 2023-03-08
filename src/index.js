@@ -6,13 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import {Provider} from 'react-redux';
 import configureStore from './store';
-import {loadReports} from './store/reportReducer';
 
 const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;
-  window.loadReports = loadReports;
 }
 
 function Root() {

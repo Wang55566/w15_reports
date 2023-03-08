@@ -1,20 +1,13 @@
 import initialReports from '../data/initial-reports.json';
 
-const LOAD_REPORTS = "report/loadreports";
 const DELETE_REPORTS = "report/deletereports"
+const CREATE_REPORT = "report/createreport";
 
 const copy_of_initialReports = [...initialReports];
 const normalized_report = {};
 copy_of_initialReports.forEach( (obj) => {
   normalized_report[obj.id] = obj;
 })
-
-export const loadReports = () => {
-  return {
-    type: LOAD_REPORTS,
-    normalized_report
-  }
-}
 
 export const deleteReports = (report) => {
   return {
@@ -23,16 +16,25 @@ export const deleteReports = (report) => {
   }
 }
 
+export const createReport = (report) => {
+  return {
+    type: CREATE_REPORT,
+    report
+  }
+}
+
 const initialState = {...normalized_report};
 
 const reportReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_REPORTS:
-      return null
     case DELETE_REPORTS:
-      const newObj = {...state};
-      delete newObj[action.report.id];
-      return newObj
+      const obj = {...state};
+      delete obj[action.report.id];
+      return obj
+    case CREATE_REPORT:
+      const obj2 = {...state};
+      obj2[action.report.id] = action.report;
+      return obj2;
     default:
       return state;
   }
